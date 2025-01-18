@@ -1,5 +1,5 @@
 ---
-title: "Programa de Prevención y Control del Dengue | 2024"
+title: "Programa de Prevención y Control del Dengue | 2025"
 format: 
   dashboard:
     nav-buttons: [twitter, github, facebook]
@@ -1105,6 +1105,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Villahermosa",
                            cve_edo = "27",
                            palette = rcartocolor::carto_pal,
+                           static_map = TRUE,
                            name = "SunsetDark")
 ```
 
@@ -1114,6 +1115,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Cardenas",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1123,6 +1125,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Frontera",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1134,6 +1137,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Balancán",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1143,6 +1147,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Comalcalco",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1153,6 +1158,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Cunduacan",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1163,6 +1169,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Emiliano Zapata",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1172,6 +1179,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Jalpa de Mendez",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1182,6 +1190,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Macuspana",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1191,6 +1200,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Paraíso",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1201,6 +1211,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Teapa",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1210,6 +1221,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Tenosique de Pino Suarez",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
@@ -1220,6 +1232,7 @@ deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
 deneggs::map_eggs_hotspots(betas = betas_27_tabasco,
                            locality = "Huimanguillo",
                            cve_edo = "27",
+                           static_map = TRUE,
                            palette = rcartocolor::carto_pal,
                            name = "SunsetDark")
 ```
