@@ -20,68 +20,8 @@ load("~/Library/CloudStorage/OneDrive-Personal/proyects/hotspots_eggs/8.RData/27
 ### [**Villahermosa**]{style="color:#990000"}
 
 <html>
-
 <head>
-
-
-
-```{=html}
-<style>
-body {
-  margin: 0px;
-  width: auto; 
-  height: auto;
-}
-
-.wrapper {
-    display: grid;
-    grid-gap: 2px;
-    grid-template-columns: 220px 220px 220px 550px;
-    grid-template-rows: 160px 160px 160px 160px;
-    background-color: #772953;
-    color: "#772953";
-  }
-
-  .box {
-    background-color: #772953;
-    color: "#772953";
-    border-radius: 2px;
-    padding: 5px;
-    font-size: 100%;
-
-  }
-
-  .a {
-    grid-column: 1 / 4;
-    grid-row: 1 / 4;
-  }
-  .b {
-    grid-column: 4 ;
-    grid-row: 1 / 3;
-  }
-  .c {
-    grid-column: 4 ;
-    grid-row: 3 / 5 ;
-  }
-  .d {
-    grid-column: 3;
-    grid-row: 4;
-  }
-  .e {
-    grid-column: 2;
-    grid-row: 4;
-  }
-  .f {
-    grid-column: 1;
-    grid-row: 4;
-  }
-</style>
-```
-
-
-
 </head>
-
 <body>
 
 ::: wrapper
@@ -92,7 +32,7 @@ loc <- rgeomex::extract_locality(cve_edo = "27",
                                  locality = "Villahermosa")
 
 # Step 2. Extract the hotspots ####
-hotspots <- denmex::den_hotspots[loc, ]
+hotspots <- hotspotsdata::den_hotspots[loc,]
 mapview::mapview(hotspots,
                  zcol = "intensity_gi",
                  layer.name = "Intensidad",
@@ -109,17 +49,36 @@ mapview::mapview(hotspots,
 ```{r forest_plot_villa, dpi = 300, fig.height= 5,fig.width = 7,fig.align = "center", out.height='100%', out.width = '100%',fig.show = "hold"}
  
 # Logistic Regression
-glm.fit <- glm(hotspots_gi ~ DENV_2008 + DENV_2009 +  DENV_2010 + DENV_2011 + 
-                   DENV_2012 + DENV_2013  +  DENV_2014 + 
-                   DENV_2015  +  DENV_2016  +  DENV_2019 +
-                   DENV_2020 + DENV_2021 +  DENV_2022 +  DENV_2023,
+hotspots <- hotspots |>
+    dplyr::mutate(DENV_2008_2010 = DENV_2008 + DENV_2009 + DENV_2010) |>
+    dplyr::mutate(DENV_2011_2014 = DENV_2011 + DENV_2012 + DENV_2013 + DENV_2014) |>
+    dplyr::mutate(DENV_2015_2017 = DENV_2015 +  DENV_2016 + DENV_2017) |>
+    dplyr::mutate(DENV_2018_2019 = DENV_2018 +  DENV_2019) |>
+    dplyr::mutate(DENV_2020_2022 = DENV_2020 +  DENV_2021 + DENV_2022) |>
+    dplyr::mutate(DENV_2023_2024 = DENV_2023 +  DENV_2024) 
+
+
+# Logistic Regression
+glm.fit <- glm(hotspots_gi~DENV_2008_2010 + DENV_2011_2014 +
+                   DENV_2015_2017 + DENV_2018_2019 +
+                   DENV_2020_2022 + DENV_2023_2024,
                data = hotspots, 
                family = binomial)
 
 result <- parameters::model_parameters(glm.fit, 
-                                      exponentiate = TRUE)
+                                       exponentiate = FALSE)
 
-plotly::ggplotly(plot(result, size_text = 1))
+plotly::ggplotly(plot(result) +
+       ggplot2::theme(axis.text.y = ggplot2::element_text(size = 8),
+                       axis.text.x = ggplot2::element_text(size = 8),
+                       axis.title = ggplot2::element_text(size = 8),
+                      plot.margin = ggplot2::unit(c(0,0,0,0), "cm")) +
+        ggplot2::scale_y_discrete(labels = c("2008-2010",
+                                             "2011-2014", 
+                                             "2015-2017",
+                                             "2018-2019",
+                                             "2020-2022",
+                                             "2023-2024")))
 ```
 :::
 
@@ -235,68 +194,8 @@ flexdashboard::gauge(round((sum(y_hot$n_cases)/sum(y$n_cases))*100, digits = 1),
 ### [**Cardenas**]{style="color:#990000"}
 
 <html>
-
 <head>
-
-
-
-```{=html}
-<style>
-body {
-  margin: 0px;
-  width: auto; 
-  height: auto;
-}
-
-.wrapper {
-    display: grid;
-    grid-gap: 2px;
-    grid-template-columns: 220px 220px 220px 550px;
-    grid-template-rows: 160px 160px 160px 160px;
-    background-color: #772953;
-    color: "#772953";
-  }
-
-  .box {
-    background-color: #772953;
-    color: "#772953";
-    border-radius: 2px;
-    padding: 5px;
-    font-size: 100%;
-
-  }
-
-  .a {
-    grid-column: 1 / 4;
-    grid-row: 1 / 4;
-  }
-  .b {
-    grid-column: 4 ;
-    grid-row: 1 / 3;
-  }
-  .c {
-    grid-column: 4 ;
-    grid-row: 3 / 5 ;
-  }
-  .d {
-    grid-column: 3;
-    grid-row: 4;
-  }
-  .e {
-    grid-column: 2;
-    grid-row: 4;
-  }
-  .f {
-    grid-column: 1;
-    grid-row: 4;
-  }
-</style>
-```
-
-
-
 </head>
-
 <body>
 
 ::: wrapper
@@ -307,7 +206,7 @@ loc <- rgeomex::extract_locality(cve_edo = "27",
                                  locality = "Cárdenas")
 
 # Step 2. Extract the hotspots ####
-hotspots <- denmex::den_hotspots[loc, ]
+hotspots <- hotspotsdata::den_hotspots[loc,]
 mapview::mapview(hotspots,
                  zcol = "intensity_gi",
                  layer.name = "Intensidad",
@@ -322,19 +221,38 @@ mapview::mapview(hotspots,
 
 ::: {.box .b}
 ```{r forest_plot_cardenas, dpi = 300, fig.height= 5,fig.width = 7,fig.align = "center", out.height='100%', out.width = '100%',fig.show = "hold"}
- 
+  
 # Logistic Regression
-glm.fit <- glm(hotspots_gi ~ DENV_2008 + DENV_2009 +  DENV_2010 + DENV_2011 + 
-                   DENV_2012 + DENV_2013  +  DENV_2014 + 
-                   DENV_2015  +  DENV_2016  +  DENV_2019 +
-                   DENV_2020 + DENV_2021 +  DENV_2022 +  DENV_2023,
+hotspots <- hotspots |>
+    dplyr::mutate(DENV_2008_2010 = DENV_2008 + DENV_2009 + DENV_2010) |>
+    dplyr::mutate(DENV_2011_2014 = DENV_2011 + DENV_2012 + DENV_2013 + DENV_2014) |>
+    dplyr::mutate(DENV_2015_2017 = DENV_2015 +  DENV_2016 + DENV_2017) |>
+    dplyr::mutate(DENV_2018_2019 = DENV_2018 +  DENV_2019) |>
+    dplyr::mutate(DENV_2020_2022 = DENV_2020 +  DENV_2021 + DENV_2022) |>
+    dplyr::mutate(DENV_2023_2024 = DENV_2023 +  DENV_2024) 
+
+
+# Logistic Regression
+glm.fit <- glm(hotspots_gi~DENV_2008_2010 + DENV_2011_2014 +
+                   DENV_2015_2017 + DENV_2018_2019 +
+                   DENV_2020_2022 + DENV_2023_2024,
                data = hotspots, 
                family = binomial)
 
 result <- parameters::model_parameters(glm.fit, 
-                                      exponentiate = TRUE)
+                                       exponentiate = FALSE)
 
-plotly::ggplotly(plot(result, size_text = 1))
+plotly::ggplotly(plot(result) +
+       ggplot2::theme(axis.text.y = ggplot2::element_text(size = 8),
+                       axis.text.x = ggplot2::element_text(size = 8),
+                       axis.title = ggplot2::element_text(size = 8),
+                      plot.margin = ggplot2::unit(c(0,0,0,0), "cm")) +
+        ggplot2::scale_y_discrete(labels = c("2008-2010",
+                                             "2011-2014", 
+                                             "2015-2017",
+                                             "2018-2019",
+                                             "2020-2022",
+                                             "2023-2024")))
 ```
 :::
 
@@ -450,70 +368,9 @@ flexdashboard::gauge(round((sum(y_hot$n_cases)/sum(y$n_cases))*100, digits = 1),
 ### [**Emiliano Zapata**]{style="color:#990000"}
 
 <html>
-
 <head>
-
-
-
-```{=html}
-<style>
-body {
-  margin: 0px;
-  width: auto; 
-  height: auto;
-}
-
-.wrapper {
-    display: grid;
-    grid-gap: 2px;
-    grid-template-columns: 220px 220px 220px 550px;
-    grid-template-rows: 160px 160px 160px 160px;
-    background-color: #772953;
-    color: "#772953";
-  }
-
-  .box {
-    background-color: #772953;
-    color: "#772953";
-    border-radius: 2px;
-    padding: 5px;
-    font-size: 100%;
-
-  }
-
-  .a {
-    grid-column: 1 / 4;
-    grid-row: 1 / 4;
-  }
-  .b {
-    grid-column: 4 ;
-    grid-row: 1 / 3;
-  }
-  .c {
-    grid-column: 4 ;
-    grid-row: 3 / 5 ;
-  }
-  .d {
-    grid-column: 3;
-    grid-row: 4;
-  }
-  .e {
-    grid-column: 2;
-    grid-row: 4;
-  }
-  .f {
-    grid-column: 1;
-    grid-row: 4;
-  }
-</style>
-```
-
-
-
 </head>
-
 <body>
-
 ::: wrapper
 ::: {.box .a}
 ```{r hotspots_dengue_emiliano}
@@ -522,7 +379,7 @@ loc <- rgeomex::extract_locality(cve_edo = "27",
                                  locality = "Emiliano Zapata")
 
 # Step 2. Extract the hotspots ####
-hotspots <- denmex::den_hotspots[loc, ]
+hotspots <- hotspotsdata::den_hotspots[loc, ]
 mapview::mapview(hotspots,
                  zcol = "intensity_gi",
                  layer.name = "Intensidad",
@@ -537,19 +394,38 @@ mapview::mapview(hotspots,
 
 ::: {.box .b}
 ```{r forest_plot_emiliano, dpi = 300, fig.height= 5,fig.width = 7,fig.align = "center", out.height='100%', out.width = '100%',fig.show = "hold"}
- 
+  
 # Logistic Regression
-glm.fit <- glm(hotspots_gi ~ DENV_2008 + DENV_2009 +  DENV_2010 + DENV_2011 + 
-                   DENV_2012 + DENV_2013  +  DENV_2014 + 
-                   DENV_2015  +  DENV_2016  +  DENV_2019 +
-                   DENV_2020 + DENV_2021 +  DENV_2022 +  DENV_2023,
+hotspots <- hotspots |>
+    dplyr::mutate(DENV_2008_2010 = DENV_2008 + DENV_2009 + DENV_2010) |>
+    dplyr::mutate(DENV_2011_2014 = DENV_2011 + DENV_2012 + DENV_2013 + DENV_2014) |>
+    dplyr::mutate(DENV_2015_2017 = DENV_2015 +  DENV_2016 + DENV_2017) |>
+    dplyr::mutate(DENV_2018_2019 = DENV_2018 +  DENV_2019) |>
+    dplyr::mutate(DENV_2020_2022 = DENV_2020 +  DENV_2021 + DENV_2022) |>
+    dplyr::mutate(DENV_2023_2024 = DENV_2023 +  DENV_2024) 
+
+
+# Logistic Regression
+glm.fit <- glm(hotspots_gi~DENV_2008_2010 + DENV_2011_2014 +
+                   DENV_2015_2017 + DENV_2018_2019 +
+                   DENV_2020_2022 + DENV_2023_2024,
                data = hotspots, 
                family = binomial)
 
 result <- parameters::model_parameters(glm.fit, 
-                                      exponentiate = TRUE)
+                                       exponentiate = FALSE)
 
-plotly::ggplotly(plot(result, size_text = 1))
+plotly::ggplotly(plot(result) +
+       ggplot2::theme(axis.text.y = ggplot2::element_text(size = 8),
+                       axis.text.x = ggplot2::element_text(size = 8),
+                       axis.title = ggplot2::element_text(size = 8),
+                      plot.margin = ggplot2::unit(c(0,0,0,0), "cm")) +
+        ggplot2::scale_y_discrete(labels = c("2008-2010",
+                                             "2011-2014", 
+                                             "2015-2017",
+                                             "2018-2019",
+                                             "2020-2022",
+                                             "2023-2024")))
 ```
 :::
 
@@ -666,68 +542,8 @@ flexdashboard::gauge(round((sum(y_hot$n_cases)/sum(y$n_cases))*100, digits = 1),
 ### [**Comalcalco**]{style="color:#990000"}
 
 <html>
-
 <head>
-
-
-
-```{=html}
-<style>
-body {
-  margin: 0px;
-  width: auto; 
-  height: auto;
-}
-
-.wrapper {
-    display: grid;
-    grid-gap: 2px;
-    grid-template-columns: 220px 220px 220px 550px;
-    grid-template-rows: 160px 160px 160px 160px;
-    background-color: #772953;
-    color: "#772953";
-  }
-
-  .box {
-    background-color: #772953;
-    color: "#772953";
-    border-radius: 2px;
-    padding: 5px;
-    font-size: 100%;
-
-  }
-
-  .a {
-    grid-column: 1 / 4;
-    grid-row: 1 / 4;
-  }
-  .b {
-    grid-column: 4 ;
-    grid-row: 1 / 3;
-  }
-  .c {
-    grid-column: 4 ;
-    grid-row: 3 / 5 ;
-  }
-  .d {
-    grid-column: 3;
-    grid-row: 4;
-  }
-  .e {
-    grid-column: 2;
-    grid-row: 4;
-  }
-  .f {
-    grid-column: 1;
-    grid-row: 4;
-  }
-</style>
-```
-
-
-
 </head>
-
 <body>
 
 ::: wrapper
@@ -738,7 +554,7 @@ loc <- rgeomex::extract_locality(cve_edo = "27",
                                  locality = "Comalcalco")
 
 # Step 2. Extract the hotspots ####
-hotspots <- denmex::den_hotspots[loc, ]
+hotspots <- hotspotsdata::den_hotspots[loc,]
 mapview::mapview(hotspots,
                  zcol = "intensity_gi",
                  layer.name = "Intensidad",
@@ -755,17 +571,36 @@ mapview::mapview(hotspots,
 ```{r forest_plot_comalcalc, dpi = 300, fig.height= 5,fig.width = 7,fig.align = "center", out.height='100%', out.width = '100%',fig.show = "hold"}
  
 # Logistic Regression
-glm.fit <- glm(hotspots_gi ~ DENV_2008 + DENV_2009 +  DENV_2010 + DENV_2011 + 
-                   DENV_2012 + DENV_2013  +  DENV_2014 + 
-                   DENV_2015  +  DENV_2016  +  DENV_2019 +
-                   DENV_2020 + DENV_2021 +  DENV_2022 +  DENV_2023,
+hotspots <- hotspots |>
+    dplyr::mutate(DENV_2008_2010 = DENV_2008 + DENV_2009 + DENV_2010) |>
+    dplyr::mutate(DENV_2011_2014 = DENV_2011 + DENV_2012 + DENV_2013 + DENV_2014) |>
+    dplyr::mutate(DENV_2015_2017 = DENV_2015 +  DENV_2016 + DENV_2017) |>
+    dplyr::mutate(DENV_2018_2019 = DENV_2018 +  DENV_2019) |>
+    dplyr::mutate(DENV_2020_2022 = DENV_2020 +  DENV_2021 + DENV_2022) |>
+    dplyr::mutate(DENV_2023_2024 = DENV_2023 +  DENV_2024) 
+
+
+# Logistic Regression
+glm.fit <- glm(hotspots_gi~DENV_2008_2010 + DENV_2011_2014 +
+                   DENV_2015_2017 + DENV_2018_2019 +
+                   DENV_2020_2022 + DENV_2023_2024,
                data = hotspots, 
                family = binomial)
 
 result <- parameters::model_parameters(glm.fit, 
-                                      exponentiate = TRUE)
+                                       exponentiate = FALSE)
 
-plotly::ggplotly(plot(result, size_text = 1))
+plotly::ggplotly(plot(result) +
+       ggplot2::theme(axis.text.y = ggplot2::element_text(size = 8),
+                       axis.text.x = ggplot2::element_text(size = 8),
+                       axis.title = ggplot2::element_text(size = 8),
+                      plot.margin = ggplot2::unit(c(0,0,0,0), "cm")) +
+        ggplot2::scale_y_discrete(labels = c("2008-2010",
+                                             "2011-2014", 
+                                             "2015-2017",
+                                             "2018-2019",
+                                             "2020-2022",
+                                             "2023-2024")))
 ```
 :::
 
@@ -882,68 +717,8 @@ flexdashboard::gauge(round((sum(y_hot$n_cases)/sum(y$n_cases))*100, digits = 1),
 ### [**Huimanguillo**]{style="color:#990000"}
 
 <html>
-
 <head>
-
-
-
-```{=html}
-<style>
-body {
-  margin: 0px;
-  width: auto; 
-  height: auto;
-}
-
-.wrapper {
-    display: grid;
-    grid-gap: 2px;
-    grid-template-columns: 220px 220px 220px 550px;
-    grid-template-rows: 160px 160px 160px 160px;
-    background-color: #772953;
-    color: "#772953";
-  }
-
-  .box {
-    background-color: #772953;
-    color: "#772953";
-    border-radius: 2px;
-    padding: 5px;
-    font-size: 100%;
-
-  }
-
-  .a {
-    grid-column: 1 / 4;
-    grid-row: 1 / 4;
-  }
-  .b {
-    grid-column: 4 ;
-    grid-row: 1 / 3;
-  }
-  .c {
-    grid-column: 4 ;
-    grid-row: 3 / 5 ;
-  }
-  .d {
-    grid-column: 3;
-    grid-row: 4;
-  }
-  .e {
-    grid-column: 2;
-    grid-row: 4;
-  }
-  .f {
-    grid-column: 1;
-    grid-row: 4;
-  }
-</style>
-```
-
-
-
 </head>
-
 <body>
 
 ::: wrapper
@@ -954,7 +729,7 @@ loc <- rgeomex::extract_locality(cve_edo = "27",
                                  locality = "Huimanguillo")
 
 # Step 2. Extract the hotspots ####
-hotspots <- denmex::den_hotspots[loc, ]
+hotspots <- hotspotsdata::den_hotspots[loc,]
 mapview::mapview(hotspots,
                  zcol = "intensity_gi",
                  layer.name = "Intensidad",
@@ -971,17 +746,36 @@ mapview::mapview(hotspots,
 ```{r forest_plot_huimanguillo, dpi = 300, fig.height= 5,fig.width = 7,fig.align = "center", out.height='100%', out.width = '100%',fig.show = "hold"}
  
 # Logistic Regression
-glm.fit <- glm(hotspots_gi ~ DENV_2008 + DENV_2009 +  DENV_2010 + DENV_2011 + 
-                   DENV_2012 + DENV_2013  +  DENV_2014 + 
-                   DENV_2015  +  DENV_2016  +  DENV_2019 +
-                   DENV_2020 + DENV_2021 +  DENV_2022 +  DENV_2023,
+hotspots <- hotspots |>
+    dplyr::mutate(DENV_2008_2010 = DENV_2008 + DENV_2009 + DENV_2010) |>
+    dplyr::mutate(DENV_2011_2014 = DENV_2011 + DENV_2012 + DENV_2013 + DENV_2014) |>
+    dplyr::mutate(DENV_2015_2017 = DENV_2015 +  DENV_2016 + DENV_2017) |>
+    dplyr::mutate(DENV_2018_2019 = DENV_2018 +  DENV_2019) |>
+    dplyr::mutate(DENV_2020_2022 = DENV_2020 +  DENV_2021 + DENV_2022) |>
+    dplyr::mutate(DENV_2023_2024 = DENV_2023 +  DENV_2024) 
+
+
+# Logistic Regression
+glm.fit <- glm(hotspots_gi~DENV_2008_2010 + DENV_2011_2014 +
+                   DENV_2015_2017 + DENV_2018_2019 +
+                   DENV_2020_2022 + DENV_2023_2024,
                data = hotspots, 
                family = binomial)
 
 result <- parameters::model_parameters(glm.fit, 
-                                      exponentiate = TRUE)
+                                       exponentiate = FALSE)
 
-plotly::ggplotly(plot(result, size_text = 1))
+plotly::ggplotly(plot(result) +
+       ggplot2::theme(axis.text.y = ggplot2::element_text(size = 8),
+                       axis.text.x = ggplot2::element_text(size = 8),
+                       axis.title = ggplot2::element_text(size = 8),
+                      plot.margin = ggplot2::unit(c(0,0,0,0), "cm")) +
+        ggplot2::scale_y_discrete(labels = c("2008-2010",
+                                             "2011-2014", 
+                                             "2015-2017",
+                                             "2018-2019",
+                                             "2020-2022",
+                                             "2023-2024")))
 ```
 :::
 
